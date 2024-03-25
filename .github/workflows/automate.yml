@@ -32,7 +32,7 @@ jobs:
     environment: production
 
     steps:
-      - name: Giving access to rep
+      - name: Giving access to repo
         uses: actions/checkout@v4
 
       - name: Configure AWS credentials
@@ -50,7 +50,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: cat_loan_app
+          ECR_REPOSITORY: loan_app_arun
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -70,6 +70,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: cat_loan_app_service123
-          cluster: cat_loan_app_cluster
+          service: loan_arun_app_service
+          cluster: loan_arun_cluster
           wait-for-service-stability: true
